@@ -2,20 +2,25 @@ import React from 'react'
 
 class RecipeSearch extends React.Component {
 
-/*categoryMap(){
+categoryMap(){
   const categoryList = this.props.categories.meals;
-  console.log(categoryList);
+  let categoryArray = []
   if (categoryList) {
-    categoryList.map((category, i) =>{        
-    return <option value={categoryList[i].strCategory}>{categoryList[i].strCategory}</option>
-  })
-}}*/
+    categoryList.map((category, i) =>{
+    categoryArray.push(<option value={category.strCategory}>{category.strCategory}</option>)
+  }
+  )}
+  return categoryArray;
+}
+
 
 render() {
+  console.log("inside render for recipesearch")
   console.log(this.props.categories)
      return (
     <div>
     <select name="dropdown">
+      {this.categoryMap()}
     </select>
     </div>   
     );
