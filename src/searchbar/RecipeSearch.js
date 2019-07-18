@@ -4,7 +4,10 @@ class RecipeSearch extends React.Component {
 
 constructor(props){
   super(props);
-  this.state = {value: ' '}
+  this.state = {
+    value: 'Beef',
+    recipes: []
+  }
   
   this.handleSubmit = this.handleSubmit.bind(this);
   this.handleChange = this.handleChange.bind(this);
@@ -17,8 +20,8 @@ categoryMap(){
   if (categoryList) {
     categoryList.map((cat) =>{
     categoryArray.push(<option value={cat.strCategory}>{cat.strCategory}</option>)
-  }
-  )}
+  })
+}
   return categoryArray;
 }
 
@@ -27,13 +30,24 @@ handleChange(e){
 }
 
 handleSubmit(e){
-  alert('Your favorite food is: ' + this.state.value)
-  e.preventDefault();
+  //alert('Your favorite food is: ' + this.state.value)
+
+  fetch(`https://www.themealdb.com/api/json/v1/1/filter.php?c=${this.state.value}`)
+        .then(response=> response.json())
+        .catch(error => {throw new Error(error.message)})
+        .then(data => {
+            console.log(this.state.value)
+            console.log(data)
+            console.log("I have the data")
+            this.setState({recipes: data})
+          });
+console.log(this.state.recipes);
+e.preventDefault();
 }
 
 render() {
   console.log("inside render for recipesearch")
-  console.log(this.props.categories)
+  //console.log(this.props.categories)
      return (
     <div>
     <form onSubmit={this.handleSubmit}>

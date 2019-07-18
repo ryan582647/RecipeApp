@@ -21,9 +21,9 @@ class App extends React.Component {
     }
 
 render() {
-    console.log("inside render for App")
+    //console.log("inside render for App")
     const { categories } = this.state;
-    console.log(categories)
+    //console.log(categories)
     return (
     <div>
     <h1 className="recipe-title">Delicious Home Cooked Meals for You!</h1>
