@@ -1,5 +1,5 @@
 import React from 'react'
-
+import RecipeResults from './RecipeResults'
 class RecipeSearch extends React.Component {
 
 constructor(props){
@@ -31,7 +31,7 @@ handleChange(e){
 
 handleSubmit(e){
   //alert('Your favorite food is: ' + this.state.value)
-
+  this.setState({recipes: []});
   fetch(`https://www.themealdb.com/api/json/v1/1/filter.php?c=${this.state.value}`)
         .then(response=> response.json())
         .catch(error => {throw new Error(error.message)})
@@ -41,7 +41,7 @@ handleSubmit(e){
             console.log("I have the data")
             this.setState({recipes: data})
           });
-console.log(this.state.recipes);
+          console.log(this.state.recipes);
 e.preventDefault();
 }
 
@@ -56,6 +56,7 @@ render() {
     </select>
     <input type='submit' value='submit'></input>
     </form>
+    <RecipeResults results={this.state.recipes} />
     </div>   
     );
 }
