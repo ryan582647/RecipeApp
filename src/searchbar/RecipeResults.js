@@ -7,7 +7,7 @@ class RecipeResults extends React.Component {
         super(props);
         this.state = {
           id: ' ',
-          recipe: null
+          recipe: []
         }
         this.handleClick = this.handleClick.bind(this)
     }
@@ -21,13 +21,14 @@ class RecipeResults extends React.Component {
                 console.log("I have the data")
                 this.setState({recipe: data})
               });
-              console.log(this.state.recipe);
               event.preventDefault();
     }
     
      resultsMap(){
         const resultsList = this.props.results.meals;
         let resultsArray = []
+
+
         if (resultsList) {
           resultsList.map((res) =>{
 
@@ -45,8 +46,8 @@ class RecipeResults extends React.Component {
 render() {
     return (
      <div>
+         <RecipePage recipe={this.state.recipe}/>      
          {this.resultsMap()} 
-         <RecipePage recipe={this.state.recipe}/>       
      </div>   
     )
 }
