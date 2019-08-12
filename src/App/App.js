@@ -1,6 +1,12 @@
 import React from 'react';
+import { Route, Switch, Link } from 'react-router-dom'
 import RecipeSearch from '../searchbar/RecipeSearch'
+import RecipeResults from '../searchbar/RecipeResults'
+import RecipePage from '../searchbar/RecipePage'
+import HomePage from '../HomePage/HomePage'
+import Header from '../HomePage/Header'
 import './App.css'
+import Login from '../LoginPage/Login'
 
 class App extends React.Component {
    
@@ -8,9 +14,39 @@ class App extends React.Component {
  constructor(props){
      super(props)
      this.state = {
-         categories: []
+         categories: [],
+         recipes: [],
+         meal: [],
      }
+     this.handleClick = this.handleClick.bind(this)
+     this.handleSubmit = this.handleSubmit.bind(this)
+
  }
+
+ handleClick(id){
+    fetch(`https://www.themealdb.com/api/json/v1/1/lookup.php?i=${id}`)
+        .then(response => response.json())
+        .catch(error => {throw new Error(error.message)})
+        .then(data => {
+            console.log(data)
+            console.log("I have the data")
+            this.setState({meal: data})
+          });
+ }
+
+ handleSubmit(value){
+    this.setState({recipes: []});
+    fetch(`https://www.themealdb.com/api/json/v1/1/filter.php?c=${value}`)
+          .then(response=> response.json())
+          .catch(error => {throw new Error(error.message)})
+          .then(data => {
+              console.log(data)
+              console.log("I have the data")
+              
+              this.setState({recipes: data})
+            });
+  
+  }
 
  componentDidMount(){
         fetch('https://www.themealdb.com/api/json/v1/1/list.php?c=list')
@@ -27,27 +63,28 @@ render() {
     //console.log(categories)
     return (
     <div>
-    <body>
-    <nav role="navigation">Nav <span className="login">Sign in</span></nav>
+    <nav role="navigation">
+    <Link to="/">HomeTest</Link>
+    Nav 
+    <Link to="/login"><span className="login">Sign in</span></Link>
+    <Switch>
+    <Route exact path="/login" component={Login}/>
+    </Switch>
+    </nav>
         <section>
-         <header role="banner">
-            <h1>No More Meatloaf!</h1>
-            <h3>The taste of a restaurant at your very own table!</h3>
-            <h3>Start here:</h3>
-            <RecipeSearch  categories={categories} />
-         </header>
+         <Route exact path="/" component={Header} />
+         <RecipeSearch  categories={categories} onSubmit={this.handleSubmit} />
+        <Switch>
+        <Route exact path="/results" render={(props) => <RecipeResults {...props} results={this.state.recipes} onClick={this.handleClick} />}/>
+        <Route exact path="/meal" render={(props) => <RecipePage {...props} results={this.state.meal} />}/>
+
+        </Switch>  
         </section>
     
         <section>
-             <h3>Tired of crappy meals straight from 80's sitcoms?</h3>
-             <p>No more Meatloaf is your surefire way to beat the tedium of eating at home.</p>
-        </section>
-        <section>
-             <p>No More Meatloaf collects hundreds of of easy to make recipes that bring the taste of a restaurant at your very own table.</p>
-             <p>Select your favorite kind of food, and our system will generate an list of delicious meals complete with instructions, images, and a video for you to follow along in the kitchen.</p>
+        <Route exact path="/" component={HomePage} />
         </section>
         <footer role="contact-info">My contacts here</footer>
-    </body>
      </div>   
     );
 }}
