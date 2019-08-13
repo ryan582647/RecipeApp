@@ -12,15 +12,28 @@ constructor(props){
   }
   
   this.handleChange = this.handleChange.bind(this);
+ 
 
 }
-handleChange(e){
-  this.setState({value: e.target.value});
+/*componentDidUpdate(listValue){
+  const { onSubmit } = this.props
+  if(listValue !== this.state.value){
 
-  const categoryValue = this.state.value;
+  onSubmit(listValue)
+  }
+}*/
+handleChange(e){
   const { onSubmit } = this.props
 
-  onSubmit(categoryValue);
+
+  this.setState(
+    {value: e.target.value},
+    onSubmit(e.target.value)
+    )
+    
+  //const categoryValue = this.state.value;
+  
+  /*onSubmit(categoryValue)*/
 }
 
 componentDidMount(){
@@ -67,6 +80,7 @@ e.preventDefault();
 } */
 
 render() {
+  console.log(this.state.value);
      return (
     <div>
     <form onSubmit={this.handleSubmit}>

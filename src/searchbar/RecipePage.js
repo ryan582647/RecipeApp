@@ -3,7 +3,7 @@ import React from 'react';
 class RecipePage extends React.Component {
 
  recipeMap(){
- const recipeContent = this.props.recipe.meals;
+ const recipeContent = this.props.results.meals;
     let recipeArray = []
 
 

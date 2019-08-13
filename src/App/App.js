@@ -24,37 +24,43 @@ class App extends React.Component {
  }
 
  handleClick(id){
+     console.log(id)
     fetch(`https://www.themealdb.com/api/json/v1/1/lookup.php?i=${id}`)
         .then(response => response.json())
-        .catch(error => {throw new Error(error.message)})
         .then(data => {
             console.log(data)
             console.log("I have the data")
             this.setState({meal: data})
-          });
+          })
+          .catch(error => {throw new Error(error.message)})
+          ;
  }
 
  handleSubmit(value){
+    console.log("Handle Submit 39", value)
     this.setState({recipes: []});
+    console.log("set state?", value)
     fetch(`https://www.themealdb.com/api/json/v1/1/filter.php?c=${value}`)
           .then(response=> response.json())
-          .catch(error => {throw new Error(error.message)})
           .then(data => {
               console.log(data)
               console.log("I have the data")
               
               this.setState({recipes: data})
-            });
+            })
+            .catch(error => {throw new Error(error.message)})
+            ;
   
   }
 
  componentDidMount(){
         fetch('https://www.themealdb.com/api/json/v1/1/list.php?c=list')
         .then(response=> response.json())
-        .catch(error => {throw new Error(error.message)})
         .then(data => {
             console.log("I have the data")
-            this.setState({categories: data})});
+            this.setState({categories: data})})
+            .catch(error => {throw new Error(error.message)})
+            ;
     }
 
 render() {

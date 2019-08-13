@@ -10,6 +10,7 @@ class RecipeResults extends React.Component {
           id: ' ',
           recipe: []
         }
+        this.handleMealClick = this.handleMealClick.bind(this);
     }
 
   /*  handleClick(event){
@@ -28,8 +29,9 @@ class RecipeResults extends React.Component {
        this.setState({ id: event.target.id})
        const { onClick } = this.props
 
-       onClick(this.state.id)
+       onClick(event.target.id)
     }
+
      resultsMap(){
         console.log(this.props.results)
         const resultsList = this.props.results.meals;
