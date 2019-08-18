@@ -13,17 +13,6 @@ class RecipeResults extends React.Component {
         this.handleMealClick = this.handleMealClick.bind(this);
     }
 
-  /*  handleClick(event){
-        fetch(`https://www.themealdb.com/api/json/v1/1/lookup.php?i=${event.target.id}`)
-            .then(response => response.json())
-            .catch(error => {throw new Error(error.message)})
-            .then(data => {
-                console.log(data)
-                console.log("I have the data")
-                this.setState({recipe: data})
-              });
-              event.preventDefault();
-    } */
     
     handleMealClick(event) {
        this.setState({ id: event.target.id})

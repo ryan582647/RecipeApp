@@ -20,11 +20,11 @@ class App extends React.Component {
      }
      this.handleClick = this.handleClick.bind(this)
      this.handleSubmit = this.handleSubmit.bind(this)
+     this.handleSave = this.handleSave.bind(this)
 
  }
 
  handleClick(id){
-     console.log(id)
     fetch(`https://www.themealdb.com/api/json/v1/1/lookup.php?i=${id}`)
         .then(response => response.json())
         .then(data => {
@@ -36,10 +36,13 @@ class App extends React.Component {
           ;
  }
 
+ handleSave(save) {
+     console.log(save)
+ }
+
+
  handleSubmit(value){
-    console.log("Handle Submit 39", value)
     this.setState({recipes: []});
-    console.log("set state?", value)
     fetch(`https://www.themealdb.com/api/json/v1/1/filter.php?c=${value}`)
           .then(response=> response.json())
           .then(data => {
@@ -82,7 +85,7 @@ render() {
          <RecipeSearch  categories={categories} onSubmit={this.handleSubmit} />
         <Switch>
         <Route exact path="/results" render={(props) => <RecipeResults {...props} results={this.state.recipes} onClick={this.handleClick} />}/>
-        <Route exact path="/meal" render={(props) => <RecipePage {...props} results={this.state.meal} />}/>
+        <Route exact path="/meal" render={(props) => <RecipePage {...props} results={this.state.meal} handleSave={this.handleSave}/>}/>
 
         </Switch>  
         </section>
