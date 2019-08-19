@@ -1,5 +1,6 @@
 import React from 'react';
 import AuthApiService from './login-service'
+import TokenService from './token-service'
 class Login extends React.Component {
 
 	handleSubmitJwtAuth = ev => {
@@ -14,7 +15,7 @@ class Login extends React.Component {
 	  .then(res => {
 		user_name.value = ''
 		password.value = ''
-		//TokenService.saveAuthToken(res.authToken)
+		TokenService.saveAuthToken(res.authToken)
 		this.props.onLoginSuccess()
 	  })
 	  .catch(res => {
@@ -33,7 +34,7 @@ render() {
 		<ul>
 			<li>
 				<label for="usermail">Email</label>
-				<input type="email" name="usermail" placeholder="yourname@email.com" required />
+				<input type="email" name="user_name" placeholder="yourname@email.com" required />
 			</li>
 			<li>
 				<label for="password">Password</label>

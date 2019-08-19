@@ -5,8 +5,10 @@ import RecipeResults from '../searchbar/RecipeResults'
 import RecipePage from '../searchbar/RecipePage'
 import HomePage from '../HomePage/HomePage'
 import Header from '../HomePage/Header'
+import SavedRecipes from '../SavedRecipes/SavedRecipes'
 import './App.css'
 import Login from '../LoginPage/Login'
+import CreateAccount from '../CreateAccount/CreateAccount';
 
 class App extends React.Component {
    
@@ -73,16 +75,20 @@ render() {
     return (
     <div>
     <nav role="navigation">
+    <Link to="/saved"><span>Your Recipes</span></Link>
+    <Link to="/create-account"><span>Create Account</span></Link>
     <Link to="/">HomeTest</Link>
     Nav 
     <Link to="/login"><span className="login">Sign in</span></Link>
     <Switch>
     <Route exact path="/login" component={Login}/>
+    <Route exact path="/saved" component={SavedRecipes} />
+    <Route exact path="/create-account" component={CreateAccount}/>
     </Switch>
     </nav>
         <section>
-         <Route exact path="/" component={Header} />
-         <RecipeSearch  categories={categories} onSubmit={this.handleSubmit} />
+        <Route exact path="/" component={Header} />
+        <RecipeSearch  categories={categories} onSubmit={this.handleSubmit} />
         <Switch>
         <Route exact path="/results" render={(props) => <RecipeResults {...props} results={this.state.recipes} onClick={this.handleClick} />}/>
         <Route exact path="/meal" render={(props) => <RecipePage {...props} results={this.state.meal} handleSave={this.handleSave}/>}/>

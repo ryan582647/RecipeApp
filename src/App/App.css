@@ -33,7 +33,7 @@ select {
   font-weight: 650;
   font-size: 16px;
 }
-nav span {
+nav .login {
   position: absolute;
   right: 50px;
 }
