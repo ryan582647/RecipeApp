@@ -1,11 +1,13 @@
 import React from 'react';
-import { Route, Switch, Link } from 'react-router-dom'
+import { Route, Switch, Link, Redirect } from 'react-router-dom'
 import RecipeSearch from '../searchbar/RecipeSearch'
 import RecipeResults from '../searchbar/RecipeResults'
 import RecipePage from '../searchbar/RecipePage'
 import HomePage from '../HomePage/HomePage'
 import Header from '../HomePage/Header'
 import SavedRecipes from '../SavedRecipes/SavedRecipes'
+import AuthApiService from '../services/login-service'
+import TokenService from '../services/token-service'
 import './App.css'
 import Login from '../LoginPage/Login'
 import CreateAccount from '../CreateAccount/CreateAccount';
@@ -19,12 +21,37 @@ class App extends React.Component {
          categories: [],
          recipes: [],
          meal: [],
+         isLoggedIn: false
      }
      this.handleClick = this.handleClick.bind(this)
      this.handleSubmit = this.handleSubmit.bind(this)
      this.handleSave = this.handleSave.bind(this)
+     this.handleSubmitJwtAuth = this.handleSubmitJwtAuth.bind(this)
 
  }
+
+ handleSubmitJwtAuth = ev => {
+    ev.preventDefault()
+    console.log("we made ittt")
+    const { username, password } = ev.target
+    console.log(username, password)
+
+  AuthApiService.postLogin({
+    username: username.value,
+    password: password.value,
+  })
+  .then(res => {
+    console.log("made it to res")
+    username.value = ''
+    password.value = ''
+    TokenService.saveAuthToken(res.authToken)
+    this.setState({isLoggedIn : true})
+  })
+  .catch(res => {
+    this.setState({ error:res.error })
+  })
+
+  }
 
  handleClick(id){
     fetch(`https://www.themealdb.com/api/json/v1/1/lookup.php?i=${id}`)
@@ -79,9 +106,9 @@ render() {
     <Link to="/create-account"><span>Create Account</span></Link>
     <Link to="/">HomeTest</Link>
     Nav 
-    <Link to="/login"><span className="login">Sign in</span></Link>
+    {this.state.isLoggedIn ? <Link to="/logout"><span className="logout">Sign Out</span></Link> : <Link to="/login"><span className="login">Sign in</span></Link>}
     <Switch>
-    <Route exact path="/login" component={Login}/>
+    {this.state.isLoggedIn ? <Redirect to="/" /> : <Route exact path="/login" render={(props) => <Login {...props} handleLogin={this.handleSubmitJwtAuth}/>}/>}
     <Route exact path="/saved" component={SavedRecipes} />
     <Route exact path="/create-account" component={CreateAccount}/>
     </Switch>

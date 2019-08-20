@@ -1,27 +1,18 @@
 import React from 'react';
-import AuthApiService from './login-service'
-import TokenService from './token-service'
+import AuthApiService from '../services/login-service'
+import TokenService from '../services/token-service'
 class Login extends React.Component {
+	constructor(props){
+		super(props)
 
-	handleSubmitJwtAuth = ev => {
-		ev.preventDefault()
-		this.setState({ error: null })
-		const { user_name, password } = ev.target
-	
-	  AuthApiService.postLogin({
-		user_name: user_name.value,
-		password: password.value,
-	  })
-	  .then(res => {
-		user_name.value = ''
-		password.value = ''
-		TokenService.saveAuthToken(res.authToken)
-		this.props.onLoginSuccess()
-	  })
-	  .catch(res => {
-		this.setState({ error:res.error })
-	  })
-	
+		this.onLogin = this.onLogin.bind(this)
+	}
+
+	onLogin(event) {
+	   event.preventDefault();
+	   console.log("We made it in onLogin")
+	  const { handleLogin } = this.props
+	  handleLogin(event);
 	  }
  
      
@@ -30,11 +21,11 @@ render() {
     <div>
       <body>
         <div class="loginform cf">
-	        <form name="login" action="index_submit" method="get" accept-charset="utf-8" onSubmit={this.handleSubmitJwtAuth}>
+	        <form name="login" onSubmit={this.onLogin}>
 		<ul>
 			<li>
 				<label for="usermail">Email</label>
-				<input type="email" name="user_name" placeholder="yourname@email.com" required />
+				<input type="email" name="username" placeholder="yourname@email.com" required />
 			</li>
 			<li>
 				<label for="password">Password</label>

@@ -1,31 +1,35 @@
 import React from 'react';
+import AuthApiService from '../services/login-service'
+
 
 class CreateAccount extends React.Component {
 
-handleCreate(user) {
-        return fetch(`${config.API_ENDPOINT}/users`, {
-          method: 'POST',
-          headers: {
-            'content-type': 'application/json',
-          },
-          body: JSON.stringify(user),
-        })
-          .then(res =>
-            (!res.ok)
-              ? res.json().then(e => Promise.reject(e))
-              : res.json()
-          )
-      }
+handleCreate = e => {
+  e.preventDefault()
+  const { username, password } = e.target
+
+  AuthApiService.postUser({
+    username: username.value,
+    password: password.value
+  })
+    .then(user => {
+      username.value = ''
+      password.value = ''
+    })
+    .catch(res => {
+      this.setState({ error: res.error })
+    })
+}
 
      
 render() {
     return (
     <div>
-   <form name="login" action="index_submit" method="get" accept-charset="utf-8">
+   <form name="login" onSubmit={this.handleCreate} >
 		<ul>
 			<li>
 				<label for="usermail">Email</label>
-				<input type="email" name="user_name" placeholder="yourname@email.com" required />
+				<input type="email" name="username" placeholder="yourname@email.com" required />
 			</li>
 			<li>
 				<label for="password">Password</label>
@@ -33,10 +37,10 @@ render() {
             </li>
             <li>
 				<label for="password">Confirm Password</label>
-				<input type="password" name="password" placeholder="password" required />
+				<input type="confirm-password" name="confirm-password" placeholder="confirm-password" required />
             </li>
 			<li>
-				<input type="submit" value="Create Account" onSubmit={this.handleCreate}/>
+				<input type="submit" value="Create Account"/>
 			</li>
 		</ul>
 	        </form>
