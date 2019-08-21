@@ -107,33 +107,32 @@ render() {
     const { categories } = this.state;
     //console.log(categories)
     return (
-    <div>
-    <nav role="navigation">
-    <Link to="/saved"><span>Your Recipes</span></Link>
-    <Link to="/create-account"><span>Create Account</span></Link>
-    <Link to="/">HomeTest</Link>
-    Nav 
-    {this.state.isLoggedIn ? <Link to="/logout"><span className="logout" onClick={this.handleSignOut}>Sign Out</span></Link> : <Link to="/login"><span className="login">Sign in</span></Link>}
-    <Switch>
-    {this.state.isLoggedIn ? <Redirect to="/" /> : <Route exact path="/login" render={(props) => <Login {...props} handleLogin={this.handleSubmitJwtAuth}/>}/>}
-    <Route exact path="/saved" component={SavedRecipes} />
-    <Route exact path="/create-account" component={CreateAccount}/>
-    </Switch>
-    </nav>
-        <section>
-        <Route exact path="/" component={Header} />
-        <RecipeSearch  categories={categories} onSubmit={this.handleSubmit} />
-        <Switch>
-        <Route exact path="/results" render={(props) => <RecipeResults {...props} results={this.state.recipes} onClick={this.handleClick} />}/>
-        <Route exact path="/meal" render={(props) => <RecipePage {...props} results={this.state.meal} handleSave={this.handleSave}/>}/>
-        <Route exact path="/logout" component={Logout} />
-
-        </Switch>  
-        </section>
+        <div>
+         <nav role="navigation">
+            <Link to="/saved"><span>Your Recipes</span></Link>
+            <Link to="/create-account"><span>Create Account</span></Link>
+            <Link to="/">HomeTest</Link>
+             
+            {this.state.isLoggedIn ? <Link to="/logout"><span className="logout" onClick={this.handleSignOut}>Sign Out</span></Link> : <Link to="/login"><span className="login">Sign in</span></Link>}
+            {this.state.isLoggedIn ? <Redirect to="/" /> : <Redirect to="/login" />}
+         </nav>
+         <section>
+            <Route exact path="/" component={Header} />
+            <RecipeSearch  categories={categories} onSubmit={this.handleSubmit} />
+            <Switch>
+                
+                <Route exact path="/results" render={(props) => <RecipeResults {...props} results={this.state.recipes} onClick={this.handleClick} />}/>
+                <Route exact path="/meal" render={(props) => <RecipePage {...props} results={this.state.meal} handleSave={this.handleSave}/>}/>
+                <Route exact path="/saved" component={SavedRecipes} />
+                <Route exact path="/" component={HomePage} />
+                
+                <Route exact path="/logout" component={Logout} />
+                <Route exact path="/create-account" component={CreateAccount}/>
+                <Route exact path="/login" render={(props) => <Login {...props} handleLogin={this.handleSubmitJwtAuth}/>}/>
+            </Switch>  
+          </section>
     
-        <section>
-        <Route exact path="/" component={HomePage} />
-        </section>
+      
         <footer role="contact-info">My contacts here</footer>
      </div>   
     );

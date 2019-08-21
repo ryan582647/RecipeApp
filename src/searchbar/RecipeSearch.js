@@ -80,7 +80,15 @@ e.preventDefault();
 } */
 
 render() {
-  console.log(this.state.value);
+  console.log("props for search", this.props);
+  //const {match: {url}} = this.props;
+
+  //if(url.startWith('/login')) {
+ //   return null;
+  //} else 
+  {
+    // your existing render login
+  
      return (
     <div>
     <form onSubmit={this.handleSubmit}>
@@ -91,6 +99,7 @@ render() {
     </form>
     </div>   
     );
+  }
 }
 }
 

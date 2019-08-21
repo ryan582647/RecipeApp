@@ -45,10 +45,20 @@ deleteRecipe (e){
 
 
 componentDidMount() {
-    fetch('http://localhost:8000/api/recipes')
+  let token = TokenService.getAuthToken();
+
+    fetch('http://localhost:8000/api/recipes', {
+      method: 'GET',
+      mode: 'cors',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`
+      }
+      
+    })
     .then(response=> response.json())
     .then(data => {
-        console.log("I have the data")
+        console.log("I have the data for Saved Recipes")
         this.setState({recipes: data})})
         .catch(error => {throw new Error(error.message)})
         ;
@@ -75,6 +85,7 @@ savedResultsMap(){
 
      
 render() {
+  console.log("in saved recipes")
     return (
     <div>
        {this.savedResultsMap()}
