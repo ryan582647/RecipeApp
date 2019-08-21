@@ -1,11 +1,14 @@
 import React from 'react';
+import TokenService from '../services/token-service'
 
 class RecipePage extends React.Component {
  
 handleRecipeSave = e => {
-
+ 
         e.preventDefault();
         let content = this.props.results.meals[0];
+        let token = TokenService.getAuthToken();
+
         console.log(content)
 
             const newRecipe = {
@@ -29,7 +32,9 @@ handleRecipeSave = e => {
     fetch(`http://localhost:8000/api/recipes`, {
       method: 'POST',
       headers: {
-        'content-type': 'application/json'
+        'content-type': 'application/json',
+        'Authorization' : `Bearer ${token}`
+
       },
       body: JSON.stringify(newRecipe),
     })

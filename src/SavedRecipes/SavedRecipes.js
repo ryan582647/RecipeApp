@@ -1,5 +1,6 @@
 import React from 'react';
 import { Route, Link } from 'react-router-dom'
+import TokenService from '../services/token-service'
 import './SavedRecipes.css'
 
 
@@ -15,12 +16,14 @@ constructor(props){
 deleteRecipe (e){
     e.preventDefault();
     let recipeID = parseInt(e.target.id)
+    let token = TokenService.getAuthToken();
   
     fetch(`http://localhost:8000/api/recipes/${recipeID}`, {
     method: 'DELETE',
     mode: 'cors',
     headers: {
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
+        'Authorization' : `Bearer ${token}`
     }
 
   })

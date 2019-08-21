@@ -10,6 +10,7 @@ import AuthApiService from '../services/login-service'
 import TokenService from '../services/token-service'
 import './App.css'
 import Login from '../LoginPage/Login'
+import Logout from '../Logout/Logout'
 import CreateAccount from '../CreateAccount/CreateAccount';
 
 class App extends React.Component {
@@ -27,6 +28,7 @@ class App extends React.Component {
      this.handleSubmit = this.handleSubmit.bind(this)
      this.handleSave = this.handleSave.bind(this)
      this.handleSubmitJwtAuth = this.handleSubmitJwtAuth.bind(this)
+     this.handleSignOut = this.handleSignOut.bind(this)
 
  }
 
@@ -51,6 +53,11 @@ class App extends React.Component {
     this.setState({ error:res.error })
   })
 
+  }
+
+  handleSignOut(){
+      TokenService.clearAuthToken()
+      this.setState({ isLoggedIn: false})
   }
 
  handleClick(id){
@@ -106,7 +113,7 @@ render() {
     <Link to="/create-account"><span>Create Account</span></Link>
     <Link to="/">HomeTest</Link>
     Nav 
-    {this.state.isLoggedIn ? <Link to="/logout"><span className="logout">Sign Out</span></Link> : <Link to="/login"><span className="login">Sign in</span></Link>}
+    {this.state.isLoggedIn ? <Link to="/logout"><span className="logout" onClick={this.handleSignOut}>Sign Out</span></Link> : <Link to="/login"><span className="login">Sign in</span></Link>}
     <Switch>
     {this.state.isLoggedIn ? <Redirect to="/" /> : <Route exact path="/login" render={(props) => <Login {...props} handleLogin={this.handleSubmitJwtAuth}/>}/>}
     <Route exact path="/saved" component={SavedRecipes} />
@@ -119,6 +126,7 @@ render() {
         <Switch>
         <Route exact path="/results" render={(props) => <RecipeResults {...props} results={this.state.recipes} onClick={this.handleClick} />}/>
         <Route exact path="/meal" render={(props) => <RecipePage {...props} results={this.state.meal} handleSave={this.handleSave}/>}/>
+        <Route exact path="/logout" component={Logout} />
 
         </Switch>  
         </section>
