@@ -1,5 +1,5 @@
 import React from 'react'
-import { Route, Switch, Link } from 'react-router-dom'
+import { withRouter, Route, Switch, Link } from 'react-router-dom'
 import RecipeResults from './RecipeResults'
 class RecipeSearch extends React.Component {
 
@@ -80,19 +80,19 @@ e.preventDefault();
 } */
 
 render() {
-  console.log("props for search", this.props);
-  //const {match: {url}} = this.props;
-
-  //if(url.startWith('/login')) {
- //   return null;
-  //} else 
-  {
+  const {location: {pathname}} = this.props;
+  
+  if(pathname === '/login' || pathname === '/create-account' || pathname === '/logout' ) {
+   console.log("this should return null")
+   return null;
+  } else {
+  
     // your existing render login
   
      return (
     <div>
-    <form onSubmit={this.handleSubmit}>
-    <select name="dropdown" value={this.state.value} onChange={this.handleChange}>
+      <form onSubmit={this.handleSubmit}>
+      <select name="dropdown" value={this.state.value} onChange={this.handleChange}>
       {this.categoryMap()}
     </select>
     <Link to='results'> <input type='submit' value='submit'></input> </Link>
@@ -103,4 +103,4 @@ render() {
 }
 }
 
-export default RecipeSearch;
+export default withRouter(RecipeSearch);

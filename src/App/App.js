@@ -1,5 +1,5 @@
 import React from 'react';
-import { Route, Switch, Link, Redirect } from 'react-router-dom'
+import { withRouter, Route, Switch, Link, Redirect } from 'react-router-dom'
 import RecipeSearch from '../searchbar/RecipeSearch'
 import RecipeResults from '../searchbar/RecipeResults'
 import RecipePage from '../searchbar/RecipePage'
@@ -10,7 +10,6 @@ import AuthApiService from '../services/login-service'
 import TokenService from '../services/token-service'
 import './App.css'
 import Login from '../LoginPage/Login'
-import Logout from '../Logout/Logout'
 import CreateAccount from '../CreateAccount/CreateAccount';
 
 class App extends React.Component {
@@ -24,6 +23,7 @@ class App extends React.Component {
          meal: [],
          isLoggedIn: false
      }
+
      this.handleClick = this.handleClick.bind(this)
      this.handleSubmit = this.handleSubmit.bind(this)
      this.handleSave = this.handleSave.bind(this)
@@ -57,7 +57,7 @@ class App extends React.Component {
 
   handleSignOut(){
       TokenService.clearAuthToken()
-      this.setState({ isLoggedIn: false})
+      this.setState({ isLoggedIn: false })
   }
 
  handleClick(id){
@@ -103,17 +103,16 @@ class App extends React.Component {
     }
 
 render() {
-    //console.log("inside render for App")
     const { categories } = this.state;
-    //console.log(categories)
+    
     return (
         <div>
          <nav role="navigation">
-            <Link to="/saved"><span>Your Recipes</span></Link>
-            <Link to="/create-account"><span>Create Account</span></Link>
-            <Link to="/">HomeTest</Link>
+            {this.state.isLoggedIn && <Link to="/saved"><span>Your Recipes</span></Link>}
+            {!this.state.isLoggedIn && <Link to="/create-account"><span>Create Account</span></Link>}
+            <Link to="/">Home</Link>
+            {this.state.isLoggedIn ? <Link to="/"> <span className="logout" onClick={this.handleSignOut}>Sign Out</span></Link> : <Link to="/login"><span className="login">Sign in</span></Link>}
              
-            {this.state.isLoggedIn ? <Link to="/logout"><span className="logout" onClick={this.handleSignOut}>Sign Out</span></Link> : <Link to="/login"><span className="login">Sign in</span></Link>}
             {this.state.isLoggedIn ? <Redirect to="/" /> : <Redirect to="/login" />}
          </nav>
          <section>
@@ -126,7 +125,6 @@ render() {
                 <Route exact path="/saved" component={SavedRecipes} />
                 <Route exact path="/" component={HomePage} />
                 
-                <Route exact path="/logout" component={Logout} />
                 <Route exact path="/create-account" component={CreateAccount}/>
                 <Route exact path="/login" render={(props) => <Login {...props} handleLogin={this.handleSubmitJwtAuth}/>}/>
             </Switch>  
@@ -138,5 +136,5 @@ render() {
     );
 }}
 
-export default App;
+export default withRouter(App);
 
