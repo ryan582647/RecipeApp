@@ -21,6 +21,7 @@ class App extends React.Component {
          categories: [],
          recipes: [],
          meal: [],
+         error: '',
          isLoggedIn: false
      }
 
@@ -47,7 +48,7 @@ class App extends React.Component {
     username.value = ''
     password.value = ''
     TokenService.saveAuthToken(res.authToken)
-    this.setState({isLoggedIn : true})
+    this.setState({isLoggedIn : true , error: ''})
   })
   .catch(res => {
     this.setState({ error:res.error })
@@ -93,10 +94,11 @@ class App extends React.Component {
   }
 
  componentDidMount(){
-        fetch('https://www.themealdb.com/api/json/v1/1/list.php?c=list')
+    
+    TokenService.clearAuthToken()
+    fetch('https://www.themealdb.com/api/json/v1/1/list.php?c=list')
         .then(response=> response.json())
         .then(data => {
-            console.log("I have the data")
             this.setState({categories: data})})
             .catch(error => {throw new Error(error.message)})
             ;
@@ -104,7 +106,6 @@ class App extends React.Component {
 
 render() {
     const { categories } = this.state;
-    
     return (
         <div>
          <nav role="navigation">
@@ -126,7 +127,7 @@ render() {
                 <Route exact path="/" component={HomePage} />
                 
                 <Route exact path="/create-account" component={CreateAccount}/>
-                <Route exact path="/login" render={(props) => <Login {...props} handleLogin={this.handleSubmitJwtAuth}/>}/>
+                <Route exact path="/login" render={(props) => <Login {...props} handleLogin={this.handleSubmitJwtAuth} error={this.state.error}/>}/>
             </Switch>  
           </section>
     

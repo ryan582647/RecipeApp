@@ -1,5 +1,5 @@
 import React from 'react';
-import { Route, Link } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import TokenService from '../services/token-service'
 import './SavedRecipes.css'
 
@@ -8,9 +8,13 @@ class SavedRecipes extends React.Component {
 constructor(props){
     super(props)
     this.state = {
-        recipes: []
+        recipes: [] ,
+        showDetails: false,
+        selectedRecipeId: 0
     }
     this.deleteRecipe = this.deleteRecipe.bind(this);
+    this.savedResultsPage = this.savedResultsPage.bind(this);
+    this.recipePhotoLink = this.recipePhotoLink.bind(this);
 }
 
 deleteRecipe (e){
@@ -74,7 +78,7 @@ savedResultsMap(){
 
       resultsArray.push(<div className="saved-list">
           <p>{res.recipe_title}</p>
-          <img src={res.picture} className="recipe-photo"/>
+          <img alt='' id={res.id} src={res.picture} onClick={this.recipePhotoLink} className="recipe-photo"/>
           <Link to="/"><button id={res.id} onClick={this.deleteRecipe}>Delete</button></Link>
       </div>)
      }
@@ -83,12 +87,22 @@ savedResultsMap(){
     return resultsArray;
   }
 
+recipePhotoLink(event){
+  this.setState({ showDetails: true, selectedRecipeId: parseInt(event.target.id)})
+}
+savedResultsPage (){
+     const recipes = this.state.recipes
+     const selectedRecipe = recipes.filter(recipe => recipe.id === this.state.selectedRecipeId)[0];
+     console.log(selectedRecipe)
+     return <div>Details here</div>
+}
+
      
 render() {
   console.log("in saved recipes")
     return (
     <div>
-       {this.savedResultsMap()}
+       {this.state.showDetails ? this.savedResultsPage() : this.savedResultsMap()}
     </div>
     )
 }

@@ -59,7 +59,7 @@ handleRecipeSave = e => {
             
             let recipeHTML = <div>
             <p name="recipe-title" value={res.strMeal}>{res.strMeal}</p>
-            <img name="recipe-picture" value={res.strMealThumb} src={res.strMealThumb} />
+            <img alt='A picture of the completed recipe.' name="recipe-picture" value={res.strMealThumb} src={res.strMealThumb} />
             <p name="recipe-region" value={res.strArea}>Region: {res.strArea}</p>
             <p name="recipe-instructions"  value={res.strInstructions}>{res.strInstructions}</p>
             <ul name="recipe-ingredients"  value={res.strIngredient1} >
