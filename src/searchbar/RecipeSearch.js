@@ -1,6 +1,5 @@
 import React from 'react'
-import { Route, Switch, Link } from 'react-router-dom'
-import RecipeResults from './RecipeResults'
+import { withRouter, Link } from 'react-router-dom'
 class RecipeSearch extends React.Component {
 
 constructor(props){
@@ -15,13 +14,7 @@ constructor(props){
  
 
 }
-/*componentDidUpdate(listValue){
-  const { onSubmit } = this.props
-  if(listValue !== this.state.value){
 
-  onSubmit(listValue)
-  }
-}*/
 handleChange(e){
   const { onSubmit } = this.props
 
@@ -31,9 +24,7 @@ handleChange(e){
     onSubmit(e.target.value)
     )
     
-  //const categoryValue = this.state.value;
-  
-  /*onSubmit(categoryValue)*/
+
 }
 
 componentDidMount(){
@@ -62,36 +53,26 @@ delayState() {
   }, 2000);
 }
 
-/* handleSubmit(e){
-  //alert('Your favorite food is: ' + this.state.value)
-  this.setState({recipes: []});
-  fetch(`https://www.themealdb.com/api/json/v1/1/filter.php?c=${this.state.value}`)
-        .then(response=> response.json())
-        .catch(error => {throw new Error(error.message)})
-        .then(data => {
-            console.log(this.state.value)
-            console.log(data)
-            console.log("I have the data")
-            
-            this.setState({recipes: data, fetched: true}, this.delayState())
-          });
-e.preventDefault();
-
-} */
 
 render() {
-  console.log(this.state.value);
+  const {location: {pathname}} = this.props;
+  
+  if(pathname === '/login' || pathname === '/create-account' || pathname === '/logout' ) {
+      
+    return null;
+  } else {  
      return (
     <div>
-    <form onSubmit={this.handleSubmit}>
-    <select name="dropdown" value={this.state.value} onChange={this.handleChange}>
+      <form onSubmit={this.handleSubmit}>
+      <select name="dropdown" value={this.state.value} onChange={this.handleChange}>
       {this.categoryMap()}
     </select>
     <Link to='results'> <input type='submit' value='submit'></input> </Link>
     </form>
     </div>   
     );
+  }
 }
 }
 
-export default RecipeSearch;
+export default withRouter(RecipeSearch);

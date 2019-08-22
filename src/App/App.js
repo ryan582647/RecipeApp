@@ -1,5 +1,5 @@
 import React from 'react';
-import { Route, Switch, Link, Redirect } from 'react-router-dom'
+import { withRouter, Route, Switch, Link, Redirect } from 'react-router-dom'
 import RecipeSearch from '../searchbar/RecipeSearch'
 import RecipeResults from '../searchbar/RecipeResults'
 import RecipePage from '../searchbar/RecipePage'
@@ -21,12 +21,15 @@ class App extends React.Component {
          categories: [],
          recipes: [],
          meal: [],
+         error: '',
          isLoggedIn: false
      }
+
      this.handleClick = this.handleClick.bind(this)
      this.handleSubmit = this.handleSubmit.bind(this)
      this.handleSave = this.handleSave.bind(this)
      this.handleSubmitJwtAuth = this.handleSubmitJwtAuth.bind(this)
+     this.handleSignOut = this.handleSignOut.bind(this)
 
  }
 
@@ -45,12 +48,17 @@ class App extends React.Component {
     username.value = ''
     password.value = ''
     TokenService.saveAuthToken(res.authToken)
-    this.setState({isLoggedIn : true})
+    this.setState({isLoggedIn : true , error: ''})
   })
   .catch(res => {
     this.setState({ error:res.error })
   })
 
+  }
+
+  handleSignOut(){
+      TokenService.clearAuthToken()
+      this.setState({ isLoggedIn: false })
   }
 
  handleClick(id){
@@ -86,50 +94,48 @@ class App extends React.Component {
   }
 
  componentDidMount(){
-        fetch('https://www.themealdb.com/api/json/v1/1/list.php?c=list')
+    
+    TokenService.clearAuthToken()
+    fetch('https://www.themealdb.com/api/json/v1/1/list.php?c=list')
         .then(response=> response.json())
         .then(data => {
-            console.log("I have the data")
             this.setState({categories: data})})
             .catch(error => {throw new Error(error.message)})
             ;
     }
 
 render() {
-    //console.log("inside render for App")
     const { categories } = this.state;
-    //console.log(categories)
     return (
-    <div>
-    <nav role="navigation">
-    <Link to="/saved"><span>Your Recipes</span></Link>
-    <Link to="/create-account"><span>Create Account</span></Link>
-    <Link to="/">HomeTest</Link>
-    Nav 
-    {this.state.isLoggedIn ? <Link to="/logout"><span className="logout">Sign Out</span></Link> : <Link to="/login"><span className="login">Sign in</span></Link>}
-    <Switch>
-    {this.state.isLoggedIn ? <Redirect to="/" /> : <Route exact path="/login" render={(props) => <Login {...props} handleLogin={this.handleSubmitJwtAuth}/>}/>}
-    <Route exact path="/saved" component={SavedRecipes} />
-    <Route exact path="/create-account" component={CreateAccount}/>
-    </Switch>
-    </nav>
-        <section>
-        <Route exact path="/" component={Header} />
-        <RecipeSearch  categories={categories} onSubmit={this.handleSubmit} />
-        <Switch>
-        <Route exact path="/results" render={(props) => <RecipeResults {...props} results={this.state.recipes} onClick={this.handleClick} />}/>
-        <Route exact path="/meal" render={(props) => <RecipePage {...props} results={this.state.meal} handleSave={this.handleSave}/>}/>
-
-        </Switch>  
-        </section>
+        <div>
+         <nav role="navigation">
+            {this.state.isLoggedIn && <Link to="/saved"><span>Your Recipes</span></Link>}
+            {!this.state.isLoggedIn && <Link to="/create-account"><span>Create Account</span></Link>}
+            <Link to="/">Home</Link>
+            {this.state.isLoggedIn ? <Link to="/"> <span className="logout" onClick={this.handleSignOut}>Sign Out</span></Link> : <Link to="/login"><span className="login">Sign in</span></Link>}
+             
+            {this.state.isLoggedIn ? <Redirect to="/" /> : <Redirect to="/login" />}
+         </nav>
+         <section>
+            <Route exact path="/" component={Header} />
+            <RecipeSearch  categories={categories} onSubmit={this.handleSubmit} />
+            <Switch>
+                
+                <Route exact path="/results" render={(props) => <RecipeResults {...props} results={this.state.recipes} onClick={this.handleClick} />}/>
+                <Route exact path="/meal" render={(props) => <RecipePage {...props} results={this.state.meal} handleSave={this.handleSave}/>}/>
+                <Route exact path="/saved" component={SavedRecipes} />
+                <Route exact path="/" component={HomePage} />
+                
+                <Route exact path="/create-account" component={CreateAccount}/>
+                <Route exact path="/login" render={(props) => <Login {...props} handleLogin={this.handleSubmitJwtAuth} error={this.state.error}/>}/>
+            </Switch>  
+          </section>
     
-        <section>
-        <Route exact path="/" component={HomePage} />
-        </section>
+      
         <footer role="contact-info">My contacts here</footer>
      </div>   
     );
 }}
 
-export default App;
+export default withRouter(App);
 

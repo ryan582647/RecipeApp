@@ -1,6 +1,5 @@
 import React from 'react';
-import {Route, Link } from 'react-router-dom'
-import RecipePage from './RecipePage'
+import { Link } from 'react-router-dom'
 
 class RecipeResults extends React.Component {
 
@@ -32,7 +31,7 @@ class RecipeResults extends React.Component {
 
           resultsArray.push(<div>
               <p>{res.strMeal}</p>
-              <img src={res.strMealThumb} />
+              <img alt='' src={res.strMealThumb} />
               <Link to="/meal"><button id={res.idMeal} onClick={this.handleMealClick}>Gib Food Pls</button></Link>
           </div>)
          }
