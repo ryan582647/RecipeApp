@@ -109,9 +109,8 @@ savedResultsPage (){
      </ul>
 
      <p>Can't read? Don't wanna read?</p>
-     <video name="recipe-video"  value={selectedRecipe.video}  width="120" height="80" controls>
-         <source src={selectedRecipe.video} />
-      </video>
+     <iframe width="420" height="345" src={selectedRecipe.video}>
+     </iframe>
       <button type="submit" onClick={this.revertList}>Back to your list </button>
  </div>
 }

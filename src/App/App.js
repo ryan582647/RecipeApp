@@ -28,12 +28,12 @@ class App extends React.Component {
      this.handleClick = this.handleClick.bind(this)
      this.handleSubmit = this.handleSubmit.bind(this)
      this.handleSave = this.handleSave.bind(this)
-     this.handleSubmitJwtAuth = this.handleSubmitJwtAuth.bind(this)
+     this.handleUserLogin = this.handleUserLogin.bind(this)
      this.handleSignOut = this.handleSignOut.bind(this)
 
  }
 
- handleSubmitJwtAuth = ev => {
+ handleUserLogin = ev => {
     ev.preventDefault()
     console.log("we made ittt")
     const { username, password } = ev.target
@@ -127,7 +127,7 @@ render() {
                 <Route exact path="/" component={HomePage} />
                 
                 <Route exact path="/create-account" component={CreateAccount}/>
-                <Route exact path="/login" render={(props) => <Login {...props} handleLogin={this.handleSubmitJwtAuth} error={this.state.error}/>}/>
+                <Route exact path="/login" render={(props) => <Login {...props} handleLogin={this.handleUserLogin} error={this.state.error}/>}/>
             </Switch>  
           </section>
     
