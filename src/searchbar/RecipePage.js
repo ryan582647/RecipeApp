@@ -1,7 +1,15 @@
 import React from 'react';
 import TokenService from '../services/token-service'
+import './RecipePage.css'
 
 class RecipePage extends React.Component {
+
+constructor(props){
+  super(props)
+  this.state = {
+    saveError: "Please sign in to save a recipe."
+  }
+}
  
 handleRecipeSave = e => {
  
@@ -74,7 +82,7 @@ handleRecipeSave = e => {
             
             let recipeHTML = <div>
             <p name="recipe-title" value={res.strMeal}>{res.strMeal}</p>
-            <img alt='A picture of the completed recipe.' name="recipe-picture" value={res.strMealThumb} src={res.strMealThumb} />
+            <img alt='A picture of the completed recipe.' className="recipe-picture" name="recipe-picture" value={res.strMealThumb} src={res.strMealThumb} />
             <p name="recipe-region" value={res.strArea}>Region: {res.strArea}</p>
             <p name="recipe-instructions"  value={res.strInstructions}>{res.strInstructions}</p>
             <ul name="recipe-ingredients"  value={res.strIngredient1} >
@@ -104,7 +112,8 @@ handleRecipeSave = e => {
             <p>Can't read? Don't wanna read?</p>
             <iframe width="420" height="345" src={videoURL}>
             </iframe>
-             <button type="submit" onClick={this.handleRecipeSave}>Save Food Pls</button>
+             <button className="recipe-page-button" type="submit" onClick={this.handleRecipeSave}>Save</button>
+             {!this.props.isLoggedIn && <div className="save-error">{this.state.saveError}</div>}
         </div>
             recipeArray.push( recipeHTML )
          }

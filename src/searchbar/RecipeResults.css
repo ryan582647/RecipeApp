@@ -1,0 +1,28 @@
+.recipe-results-image {
+    height: 300px;
+    width: 300px;
+}
+
+.recipe-results-button {
+    background-color: #d1b5a1; 
+    border: none;
+    color: white;
+    padding: 6.5px 13px;
+    text-align: center;
+    text-decoration: none;
+    display: block;
+    font-size: 13px;
+    margin: auto 580px;
+    -webkit-transition-duration: 0.4s; 
+    transition-duration: 0.4s;
+    cursor: pointer;
+}
+
+.recipe-results-button:hover {
+    background-color: #594940;
+    color: white;
+  }
+
+.meal-columns {
+    display: inline-block
+}

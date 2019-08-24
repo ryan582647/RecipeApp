@@ -1,6 +1,8 @@
 * {
   box-sizing: border-box;
   font-family: "Arial", sans-serif;
+  text-decoration: none;
+
 
 }
 
@@ -13,21 +15,23 @@ color: #ecebe4;
 
 }
 nav, footer {
-  background-color: #ddd3c1;
+  background-color: #77665c;
+  box-shadow: 7px 3px 7px 2px rgba(0,0,0,.56);
 }
 nav {
   position: fixed;
   top: 0;
   left: 0;
   right: 0;
+  height: 35px;
 }
 
 section {
   padding: 20px 10px;
-  background-color: brown;
+  background-color: #aaa085;
 }
 section:nth-child(odd){
-  background-color: tan;
+  background-color: #594940;
 }
 
 select {
@@ -40,4 +44,78 @@ select {
 nav .login {
   position: absolute;
   right: 50px;
+  vertical-align: center;
+  text-decoration: none;
+
+}
+
+nav .logout {
+  position: absolute;
+  right: 50px;
+  vertical-align: center;
+  text-decoration: none;
+}
+
+.nav-buttons {
+  text-decoration: none;
+}
+
+.saved-recipes {
+  position: absolute;
+  left: 50px;
+  vertical-align: center;
+  text-decoration: none;
+}
+
+nav .create-account {
+   position: absolute;
+   right: 140px;
+   vertical-align: center;
+   text-decoration: none;
+
+}
+
+.loginform {
+  height: 50%;
+  vertical-align: center;
+  padding: 100px;
+  margin: 50px 50px;
+}
+
+.login-label{
+  display:block;
+}
+
+.login-input {
+  width: 75%;
+  padding: 12px 20px;
+  margin: 8px 0;
+  display: inline-block;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+
+.login-error{
+  color: red;
+}
+
+.login-button {
+  background-color: #d1b5a1; 
+  border: none;
+  color: white;
+  padding: 8px 18px;
+  text-align: center;
+  text-decoration: none;
+  display: block;
+  font-size: 16px;
+  margin: 15px 435px;
+  -webkit-transition-duration: 0.4s; 
+  transition-duration: 0.4s;
+  cursor: pointer;
+}
+
+.login-button:hover {
+  background-color: #594940;
+  color: white;
 }
