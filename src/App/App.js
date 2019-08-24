@@ -111,8 +111,8 @@ render() {
          <nav role="navigation">
             {this.state.isLoggedIn && <Link to="/saved"><span className="nav-buttons saved-recipes">Your Recipes</span></Link>}
             {!this.state.isLoggedIn && <Link to="/create-account"><span className="nav-buttons create-account">Create Account</span></Link>}
-            <Link to="/"><span className="nav-buttons">Home</span></Link>
-            {this.state.isLoggedIn ? <Link to="/"> <span className="logout nav-buttons" onClick={this.handleSignOut}>Sign Out</span></Link> : <Link to="/login"><span className="login">Sign in</span></Link>}
+            <Link to="/"><span className="nav-buttons home-button">Home</span></Link>
+            {this.state.isLoggedIn ? <Link to="/"> <span className="logout nav-buttons" onClick={this.handleSignOut}>Sign Out</span></Link> : <Link to="/login"><span className="login nav-buttons">Sign in</span></Link>}
              
             {this.state.isLoggedIn && <Redirect to="/" />}
          </nav>
@@ -132,7 +132,7 @@ render() {
           </section>
     
       
-        <footer role="contact-info"><a className="nav-buttons" target="_blank" href="https://github.com/ryan582647/">LinkedIn</a></footer>
+        <footer role="contact-info"><a className="nav-buttons" target="_blank" href="https://github.com/ryan582647/">GitHub</a></footer>
      </div>   
     );
 }}

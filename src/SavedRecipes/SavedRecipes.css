@@ -1,7 +1,29 @@
 .recipe-photo {
-    height: 150px;
-    width: 150px;
+    height: 300px;
+    width: 300px;
 }
+
+.saved-recipes-button {
+    background-color: #d1b5a1; 
+    border: none;
+    color: white;
+    padding: 8px 18px;
+    text-align: center;
+    text-decoration: none;
+    display: block;
+    font-size: 16px;
+    margin: auto;
+    -webkit-transition-duration: 0.4s; 
+    transition-duration: 0.4s;
+    cursor: pointer;
+}
+
+.saved-recipes-button:hover {
+    background-color: #594940;
+    color: white;
+  }
+
+
 
 .saved-list {
     height: 60%;

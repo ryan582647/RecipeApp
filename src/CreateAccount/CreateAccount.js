@@ -38,22 +38,22 @@ handleCreate = e => {
      
 render() {
     return (
-  <div>
+  <div className="loginform">
     <form name="login" onSubmit={this.handleCreate} >
 			<div>
-				<label for="usermail">Email</label>
-				<input type="email" name="username" placeholder="yourname@email.com" required />
+				<label className="login-label" for="usermail">Email</label>
+				<input className="login-input" type="email" name="username" placeholder="yourname@email.com" required />
 			</div>
 			<div>
-				<label for="password">Password</label>
-				<input type="password" name="password" placeholder="password" required />
+				<label className="login-label" for="password">Password</label>
+				<input className="login-input" type="password" name="password" placeholder="password" required />
       </div>
       <div>
-				<label for="password">Confirm Password</label>
-				<input type="password" name="confirmPassword" placeholder="confirmPassword" required />
+				<label className="login-label" for="password">Confirm Password</label>
+				<input className="login-input" type="password" name="confirmPassword" placeholder="confirm password" required />
       </div>
 			<div>
-				<input type="submit" value="Create Account"/>
+				<input className="create-account-button" type="submit" value="Create Account"/>
         {(this.state.error !== '') && <div className="login-error">{this.state.error}</div>}
         {this.state.isRedirect && <Redirect to='/' />}
 			</div>

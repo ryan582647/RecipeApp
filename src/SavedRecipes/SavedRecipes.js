@@ -74,7 +74,7 @@ savedResultsMap(){
       resultsArray.push(<div className="saved-list">
           <p>{res.recipe_title}</p>
           <img alt='' id={res.id} src={res.picture} onClick={this.recipePhotoLink} className="recipe-photo"/>
-          <Link to="/"><button id={res.id} onClick={this.deleteRecipe}>Delete</button></Link>
+          <Link to="/"><button className="saved-recipes-button" id={res.id} onClick={this.deleteRecipe}>Delete</button></Link>
       </div>)
      }
     )
@@ -111,7 +111,7 @@ savedResultsPage (){
      <p>Can't read? Don't wanna read?</p>
      <iframe width="420" height="345" src={selectedRecipe.video}>
      </iframe>
-      <button type="submit" onClick={this.revertList}>Back to your list </button>
+      <button className="saved-recipes-button" type="submit" onClick={this.revertList}>Back to your list </button>
  </div>
 }
 
