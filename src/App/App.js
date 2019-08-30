@@ -28,12 +28,12 @@ class App extends React.Component {
      this.handleClick = this.handleClick.bind(this)
      this.handleSubmit = this.handleSubmit.bind(this)
      this.handleSave = this.handleSave.bind(this)
-     this.handleSubmitJwtAuth = this.handleSubmitJwtAuth.bind(this)
+     this.handleUserLogin = this.handleUserLogin.bind(this)
      this.handleSignOut = this.handleSignOut.bind(this)
 
  }
 
- handleSubmitJwtAuth = ev => {
+ handleUserLogin = ev => {
     ev.preventDefault()
     console.log("we made ittt")
     const { username, password } = ev.target
@@ -109,30 +109,30 @@ render() {
     return (
         <div>
          <nav role="navigation">
-            {this.state.isLoggedIn && <Link to="/saved"><span>Your Recipes</span></Link>}
-            {!this.state.isLoggedIn && <Link to="/create-account"><span>Create Account</span></Link>}
-            <Link to="/">Home</Link>
-            {this.state.isLoggedIn ? <Link to="/"> <span className="logout" onClick={this.handleSignOut}>Sign Out</span></Link> : <Link to="/login"><span className="login">Sign in</span></Link>}
+            {this.state.isLoggedIn && <Link to="/saved"><span className="nav-buttons saved-recipes">Your Recipes</span></Link>}
+            {!this.state.isLoggedIn && <Link to="/create-account"><span className="nav-buttons create-account">Create Account</span></Link>}
+            <Link to="/"><span className="nav-buttons home-button">Home</span></Link>
+            {this.state.isLoggedIn ? <Link to="/"> <span className="logout nav-buttons" onClick={this.handleSignOut}>Sign Out</span></Link> : <Link to="/login"><span className="login nav-buttons">Sign in</span></Link>}
              
-            {this.state.isLoggedIn ? <Redirect to="/" /> : <Redirect to="/login" />}
+            {this.state.isLoggedIn && <Redirect to="/" />}
          </nav>
          <section>
             <Route exact path="/" component={Header} />
             <RecipeSearch  categories={categories} onSubmit={this.handleSubmit} />
-            <Switch>
+            <Switch>{/* placed here for clarity */}
                 
                 <Route exact path="/results" render={(props) => <RecipeResults {...props} results={this.state.recipes} onClick={this.handleClick} />}/>
-                <Route exact path="/meal" render={(props) => <RecipePage {...props} results={this.state.meal} handleSave={this.handleSave}/>}/>
+                <Route exact path="/meal" render={(props) => <RecipePage {...props} results={this.state.meal} isLoggedIn={this.state.isLoggedIn} handleSave={this.handleSave}/>}/>
                 <Route exact path="/saved" component={SavedRecipes} />
                 <Route exact path="/" component={HomePage} />
                 
                 <Route exact path="/create-account" component={CreateAccount}/>
-                <Route exact path="/login" render={(props) => <Login {...props} handleLogin={this.handleSubmitJwtAuth} error={this.state.error}/>}/>
+                <Route exact path="/login" render={(props) => <Login {...props} handleLogin={this.handleUserLogin} error={this.state.error}/>}/>
             </Switch>  
           </section>
     
       
-        <footer role="contact-info">My contacts here</footer>
+        <footer role="contact-info"><a className="nav-buttons" target="_blank" href="https://github.com/ryan582647/">GitHub</a></footer>
      </div>   
     );
 }}

@@ -14,6 +14,7 @@ render() {
         <div>  
              <p>No More Meatloaf collects hundreds of of easy to make recipes that bring the taste of a restaurant at your very own table.</p>
              <p>Select your favorite kind of food, and our system will generate an list of delicious meals complete with instructions, images, and a video for you to follow along in the kitchen.</p>
+             <p>Want to save your recipes to create again? Hoard your favorites by signing in and clicking save as you browse through our list.</p>
         </div>   
     </div>
     )

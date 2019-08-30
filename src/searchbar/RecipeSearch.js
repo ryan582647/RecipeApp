@@ -1,5 +1,6 @@
 import React from 'react'
 import { withRouter, Link } from 'react-router-dom'
+import './RecipeSearch.css'
 class RecipeSearch extends React.Component {
 
 constructor(props){
@@ -11,9 +12,7 @@ constructor(props){
   }
   
   this.handleChange = this.handleChange.bind(this);
- 
-
-}
+ }
 
 handleChange(e){
   const { onSubmit } = this.props
@@ -64,10 +63,10 @@ render() {
      return (
     <div>
       <form onSubmit={this.handleSubmit}>
-      <select name="dropdown" value={this.state.value} onChange={this.handleChange}>
+      <select className="meal-dropdown" name="dropdown" value={this.state.value} onChange={this.handleChange}>
       {this.categoryMap()}
     </select>
-    <Link to='results'> <input type='submit' value='submit'></input> </Link>
+    <Link to='results'> <input className="button" type='submit' value='submit'></input> </Link>
     </form>
     </div>   
     );

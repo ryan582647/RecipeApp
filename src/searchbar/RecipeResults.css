@@ -1,9 +1,9 @@
-.recipe-photo {
+.recipe-results-image {
     height: 300px;
     width: 300px;
 }
 
-.saved-recipes-button {
+.recipe-results-button {
     background-color: #d1b5a1; 
     border: none;
     color: white;
@@ -12,19 +12,17 @@
     text-decoration: none;
     display: block;
     font-size: 16px;
-    margin: auto;
+    margin: auto 580px;
     -webkit-transition-duration: 0.4s; 
     transition-duration: 0.4s;
     cursor: pointer;
 }
 
-.saved-recipes-button:hover {
+.recipe-results-button:hover {
     background-color: #594940;
     color: white;
   }
 
-
-
-.saved-list {
-    height: 60%;
+.meal-columns {
+    display: inline-block
 }

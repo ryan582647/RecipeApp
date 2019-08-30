@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom'
+import './RecipeResults.css'
 
 class RecipeResults extends React.Component {
 
@@ -29,10 +30,10 @@ class RecipeResults extends React.Component {
         if (resultsList) {
           resultsList.map((res) =>{
 
-          resultsArray.push(<div>
+          resultsArray.push(<div className="meal-columns">
               <p>{res.strMeal}</p>
-              <img alt='' src={res.strMealThumb} />
-              <Link to="/meal"><button id={res.idMeal} onClick={this.handleMealClick}>Gib Food Pls</button></Link>
+              <img alt='' className="recipe-results-image" src={res.strMealThumb} />
+              <Link to="/meal"><button className="recipe-results-button" id={res.idMeal} onClick={this.handleMealClick}>Select</button></Link>
           </div>)
          }
         )

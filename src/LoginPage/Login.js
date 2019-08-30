@@ -18,25 +18,23 @@ class Login extends React.Component {
 render() {
 	console.log("error for login", this.props.error)
     return (
-    <div>
+    <div className="login-form">
         <div className="loginform cf">
 	        <form name="login" onSubmit={this.onLogin}>
-		<ul>
-			<li>
-				<label htmlFor="usermail">Email</label>
-				<input type="email" name="username" placeholder="yourname@email.com" required />
-			</li>
-			<li>
-				<label htmlFor="password">Password</label>
-				<input type="password" name="password" placeholder="password" required />
-            </li>
-			<li>
-				<input type="submit" value="Login" />
-			</li>
-		</ul>
+			<div>
+				<label className="login-label" htmlFor="usermail">Email</label>
+				<input className="login-input" type="email" name="username" placeholder="yourname@email.com" required />
+			</div>
+			<div>
+				<label className="login-label" htmlFor="password">Password</label>
+				<input className="login-input" type="password" name="password" placeholder="password" required />
+            </div>
+			<div>
+				<input className="login-button" type="submit" value="Login" />
+				{(this.props.error !== '') && <div className="login-error">{this.props.error}</div>}
+			</div>
 	        </form>
         </div>
-		{(this.props.error !== '') && <div className="login-error">{this.props.error}</div>}
     </div>
     )
 }

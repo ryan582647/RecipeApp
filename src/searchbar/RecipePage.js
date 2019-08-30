@@ -1,15 +1,31 @@
 import React from 'react';
 import TokenService from '../services/token-service'
+import './RecipePage.css'
 
 class RecipePage extends React.Component {
+
+constructor(props){
+  super(props)
+  this.state = {
+    saveError: "Please sign in to save a recipe."
+  }
+}
  
 handleRecipeSave = e => {
  
         e.preventDefault();
         let content = this.props.results.meals[0];
         let token = TokenService.getAuthToken();
+        let videoURL = ""        
+        console.log("YT url ", content.strYoutube)
 
-        console.log(content)
+        if (content.strYoutube !== "" && content.strYoutube.length > 5) {
+        let videoData = content.strYoutube.split("?")
+        let videoNumber = videoData[1].split("=")
+        console.log("Video id ", videoNumber)
+        videoURL = "https://www.youtube.com/embed/" + videoNumber[1]
+        }
+
 
             const newRecipe = {
                 id: content.idMeal,
@@ -17,7 +33,7 @@ handleRecipeSave = e => {
                 picture: content.strMealThumb,
                 region: content.strArea,
                 instructions: content.strInstructions,
-                video: content.strYoutube,
+                video: videoURL,
                 ingredients: content.strIngredient1 + ',' + content.strIngredient2 + ','  +
                 content.strIngredient3 + ',' + content.strIngredient4 + ','  +
                 content.strIngredient5 + ',' + content.strIngredient6 + ','  +
@@ -55,11 +71,18 @@ handleRecipeSave = e => {
     let recipeArray = []
 
         if (recipeContent) {
-            recipeContent.map((res) =>{
+            recipeContent.map((res) =>{ 
+              let videoURL = "" ;
+              if (res.strYoutube !== "" && res.strYoutube.length > 5) {
+                let videoData = res.strYoutube.split("?")
+                let videoNumber = videoData[1].split("=")
+                console.log("Video id ", videoNumber)
+                videoURL = "https://www.youtube.com/embed/" + videoNumber[1]
+                }
             
             let recipeHTML = <div>
             <p name="recipe-title" value={res.strMeal}>{res.strMeal}</p>
-            <img alt='A picture of the completed recipe.' name="recipe-picture" value={res.strMealThumb} src={res.strMealThumb} />
+            <img alt='A picture of the completed recipe.' className="recipe-picture" name="recipe-picture" value={res.strMealThumb} src={res.strMealThumb} />
             <p name="recipe-region" value={res.strArea}>Region: {res.strArea}</p>
             <p name="recipe-instructions"  value={res.strInstructions}>{res.strInstructions}</p>
             <ul name="recipe-ingredients"  value={res.strIngredient1} >
@@ -87,10 +110,10 @@ handleRecipeSave = e => {
             </ul>
       
             <p>Can't read? Don't wanna read?</p>
-            <video name="recipe-video"  value={res.strYoutube}  width="120" height="80" controls>
-                <source src={res.strYoutube} />
-             </video>
-             <button type="submit" onClick={this.handleRecipeSave}>Save Food Pls</button>
+            <iframe width="420" height="345" src={videoURL}>
+            </iframe>
+             <button className="recipe-page-button" type="submit" onClick={this.handleRecipeSave}>Save</button>
+             {!this.props.isLoggedIn && <div className="save-error">{this.state.saveError}</div>}
         </div>
             recipeArray.push( recipeHTML )
          }
