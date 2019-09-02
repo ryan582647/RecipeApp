@@ -22,7 +22,7 @@ deleteRecipe (e){
     e.preventDefault();
     let recipeID = parseInt(e.target.id)
     let token = TokenService.getAuthToken();
-    fetch(`http://localhost:8000/api/recipes/${recipeID}`, {
+    fetch(`https://safe-sands-81610.herokuapp.com/api/recipes/${recipeID}`, {
     method: 'DELETE',
     mode: 'cors',
     headers: {
@@ -49,7 +49,7 @@ deleteRecipe (e){
 
 componentDidMount() {
     let token = TokenService.getAuthToken();
-    fetch('http://localhost:8000/api/recipes', {
+    fetch('https://safe-sands-81610.herokuapp.com/api/recipes', {
       method: 'GET',
       mode: 'cors',
       headers: {

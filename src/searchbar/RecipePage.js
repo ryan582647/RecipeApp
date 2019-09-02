@@ -45,7 +45,7 @@ handleRecipeSave = e => {
                 content.strIngredient17 + ',' + content.strIngredient18 + ',' +
                 content.strIngredient19 + ',' + content.strIngredient20 
             }
-    fetch(`http://localhost:8000/api/recipes`, {
+    fetch(`https://safe-sands-81610.herokuapp.com/api/recipes`, {
       method: 'POST',
       headers: {
         'content-type': 'application/json',
