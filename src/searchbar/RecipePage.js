@@ -7,7 +7,8 @@ class RecipePage extends React.Component {
 constructor(props){
   super(props)
   this.state = {
-    saveError: "Please sign in to save a recipe."
+    saveError: "Please sign in to save a recipe.",
+    saveSuccess: false
   }
 }
  
@@ -62,7 +63,10 @@ handleRecipeSave = e => {
       .catch(error => {
         console.error({ error })
       })
-        
+      
+      this.setState({ saveSuccess: true})
+      setTimeout(save => this.setState({ saveSuccess: false}), 3000);
+
 }
     
  recipeMap(){
@@ -114,6 +118,7 @@ handleRecipeSave = e => {
             </iframe>
              <button className="recipe-page-button" type="submit" onClick={this.handleRecipeSave}>Save</button>
              {!this.props.isLoggedIn && <div className="save-error">{this.state.saveError}</div>}
+             {this.state.saveSuccess && <div>Successfully saved!</div>}
         </div>
             recipeArray.push( recipeHTML )
          }
