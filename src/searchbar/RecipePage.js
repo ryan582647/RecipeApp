@@ -118,7 +118,7 @@ handleRecipeSave = e => {
             </iframe>
              <button className="recipe-page-button" type="submit" onClick={this.handleRecipeSave}>Save</button>
              {!this.props.isLoggedIn && <div className="save-error">{this.state.saveError}</div>}
-             {this.state.saveSuccess && <div>Successfully saved!</div>}
+             {this.state.saveSuccess && <div className="save-success">Successfully saved!</div>}
         </div>
             recipeArray.push( recipeHTML )
          }
