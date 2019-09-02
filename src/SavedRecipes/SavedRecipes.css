@@ -3,6 +3,10 @@
     width: 300px;
 }
 
+.recipe-photo:hover {
+    box-shadow: 3px 3px 3px 3px rgba(0,0,0,.56);
+}
+
 .saved-recipes-button {
     background-color: #d1b5a1; 
     border: none;

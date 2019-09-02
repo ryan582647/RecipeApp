@@ -1,5 +1,5 @@
 export default {
-    API_ENDPOINT: 'http://localhost:8000/api',
+    API_ENDPOINT: 'https://safe-sands-81610.herokuapp.com/api',
     TOKEN_KEY: 'recipe-app-auth-token'
   }
   
